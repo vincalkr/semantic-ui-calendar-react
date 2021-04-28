@@ -1,7 +1,13 @@
 :tada: Starting with version 0.8.0 it's css free.
 :warning: Uncompatible with *semantic-ui-react* version 0.83.0
 
-# semantic-ui-calendar-react
+NEW FEATURE :tada:
+
+#In DatTimeInput Component
+
++added new callback prop called onDateChange triggered on month - year changing when press side arrows
+
+# semantic-ui-calendar-react-plus
 Datepicker react component based on semantic-ui-react components
 
 My intention was to create something that looks like this https://github.com/mdehoog/Semantic-UI-Calendar.
@@ -12,7 +18,7 @@ Here you can find a live example https://arfedulov.github.io/semantic-ui-calenda
 
 ## npm
 ```
-npm i semantic-ui-calendar-react
+npm i semantic-ui-calendar-react-plus
 ```
 
 ## CDN
