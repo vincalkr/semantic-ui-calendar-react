@@ -44,19 +44,36 @@ type DayPickerProps = BasePickerProps
   & EnableValuesProps
   & MinMaxValueProps
   & MarkedValuesProps
-  & { onDateChange?: (date: Date | moment.Moment) => void }
+  & { 
+    dateFormat?: string;
+    onDateChange?: (date: Date | moment.Moment) => void;
+   }
 
 class DayPicker
   extends SingleSelectionPicker<DayPickerProps>
   implements ProvideHeadingValue {
+
+  currentDate: moment.Moment = null;
+  
   constructor(props) {
     super(props);
     this.PAGE_WIDTH = PAGE_WIDTH;
+
+    this.currentDate = null;
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.onDateChange)
-      this.props.onDateChange(this.state.date);
+    if(this.props.onDateChange) {
+      if(this.currentDate !== this.state.date) {
+          this.currentDate = this.state.date;
+
+          // this.props.onDateChange(this.state.date.toDate());
+          this.props.onDateChange({
+            ...this.props,
+            value: this.state.date.format(`${this.props.dateFormat} HH:mm`)
+          } as any);
+      }
+    }
   }
 
   public render() {

@@ -260,6 +260,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     } = this.props;
     const dateTimeFormat = this.getDateTimeFormat();
     const pickerProps = {
+      ...this.props,
       tabIndex,
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
