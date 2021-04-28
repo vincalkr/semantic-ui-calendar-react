@@ -178,6 +178,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       timeFormat,
       initialDate,
       disable,
+      enable,
       maxDate,
       minDate,
       preserveViewMode,
@@ -255,6 +256,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       markColor,
       localization,
       tabIndex,
+      enable,
       pickerStyle,
       pickerWidth,
     } = this.props;
@@ -273,6 +275,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       onHeaderClick: this.switchToPrevMode,
       initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateTimeFormat),
       value: buildValue(value, null, localization, dateTimeFormat, null),
+      enable: parseArrayOrValue(enable, dateFormat, localization),
       minDate: parseValue(minDate, dateTimeFormat, localization),
       maxDate: parseValue(maxDate, dateTimeFormat, localization),
       localization,
