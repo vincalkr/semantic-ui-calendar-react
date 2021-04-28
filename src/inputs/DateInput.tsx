@@ -76,7 +76,7 @@ export interface DateInputProps extends
   MinMaxValueProps {
   /** Display mode to start. */
   startMode?: CalendarMode;
-  onDateChange?: (date: Date | moment.Moment) => void;
+  onDateChange?: (data: DateInputProps) => void;
 }
 
 export type DateInputOnChangeData = DateInputProps;

@@ -27,6 +27,7 @@ import {
   isPrevPageAvailable,
 } from './sharedFunctions';
 import moment from 'moment';
+import { DateInputProps } from 'src/inputs';
 
 const PAGE_WIDTH = 7;
 export const DAYS_ON_PAGE = WEEKS_TO_DISPLAY * PAGE_WIDTH;
@@ -46,7 +47,7 @@ type DayPickerProps = BasePickerProps
   & MarkedValuesProps
   & { 
     dateFormat?: string;
-    onDateChange?: (date: Date | moment.Moment) => void;
+    onDateChange?: (data: DateInputProps) => void;
    }
 
 class DayPicker
@@ -71,7 +72,7 @@ class DayPicker
           this.props.onDateChange({
             ...this.props,
             value: this.state.date.format(`${this.props.dateFormat} HH:mm`)
-          } as any);
+          });
       }
     }
   }
