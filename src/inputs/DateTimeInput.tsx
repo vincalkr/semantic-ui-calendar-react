@@ -188,6 +188,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       marked,
       localization,
       onChange,
+      onDateChange,
       disableMinute,
       ...rest
     } = this.props;
@@ -302,6 +303,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
           marked={markedParsed}
           markColor={markColor}
           disable={disableParsed}
+          onDateChange={this.props.onDateChange}
         />
       );
     }

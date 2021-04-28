@@ -26,6 +26,7 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
+import moment from 'moment';
 
 const PAGE_WIDTH = 7;
 export const DAYS_ON_PAGE = WEEKS_TO_DISPLAY * PAGE_WIDTH;
@@ -42,7 +43,8 @@ type DayPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
   & MinMaxValueProps
-  & MarkedValuesProps;
+  & MarkedValuesProps
+  & { onDateChange?: (date: Date | moment.Moment) => void }
 
 class DayPicker
   extends SingleSelectionPicker<DayPickerProps>
@@ -50,6 +52,11 @@ class DayPicker
   constructor(props) {
     super(props);
     this.PAGE_WIDTH = PAGE_WIDTH;
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.onDateChange)
+      this.props.onDateChange(this.state.date);
   }
 
   public render() {
@@ -69,6 +76,7 @@ class DayPicker
       marked,
       markColor,
       localization,
+      onDateChange,
       ...rest
     } = this.props;
 
