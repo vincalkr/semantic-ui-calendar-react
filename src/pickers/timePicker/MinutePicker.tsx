@@ -24,6 +24,7 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
+import moment from 'moment';
 
 const MINUTES_STEP = 5;
 const MINUTES_ON_PAGE = 12;
@@ -33,7 +34,8 @@ type MinutePickerProps = BasePickerProps
   & MinMaxValueProps
   & DisableValuesProps
   & TimePickerProps
-  & OptionalHeaderProps;
+  & OptionalHeaderProps
+  & { enable?: moment.Moment[], hour?: number; };
 
 export interface MinutePickerOnChangeData extends BasePickerOnChangeData {
   value: {
@@ -61,6 +63,7 @@ class MinutePicker
     const {
       onChange,
       value,
+      hour,
       initializeWith,
       closePopup,
       inline,
@@ -74,6 +77,7 @@ class MinutePicker
       localization,
       ...rest
     } = this.props;
+
 
     return (
       <MinuteView
@@ -102,18 +106,26 @@ class MinutePicker
   }
 
   protected buildCalendarValues(): string[] {
-    /*
-      Return array of minutes (strings) like ['16:15', '16:20', ...]
-      that used to populate calendar's page.
-    */
-    const hour = this.state.date.hour() < 10
-      ? '0' + this.state.date.hour().toString()
-      : this.state.date.hour().toString();
+    const houresInDay = this.props.enable.filter(date => date.isSame(this.state.date, 'day'));
 
-    return range(0, 60, MINUTES_STEP)
-      .map((minute) => `${minute < 10 ? '0' : ''}${minute}`)
-      .map((minute) => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat));
+    const same = houresInDay.filter(h => h.hour() == this.state.date.hour());
+
+    return Array.from(new Set(same.map(h => h.format('HH:mm'))));
   }
+
+  // protected buildCalendarValues(): string[] {
+  //   /*
+  //     Return array of minutes (strings) like ['16:15', '16:20', ...]
+  //     that used to populate calendar's page.
+  //   */
+  //   const hour = this.state.date.hour() < 10
+  //     ? '0' + this.state.date.hour().toString()
+  //     : this.state.date.hour().toString();
+
+  //   return range(0, 60, MINUTES_STEP)
+  //     .map((minute) => `${minute < 10 ? '0' : ''}${minute}`)
+  //     .map((minute) => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat));
+  // }
 
   protected getSelectableCellPositions(): number[] {
     const disabled = this.getDisabledPositions();
@@ -201,7 +213,7 @@ class MinutePicker
         month: this.state.date.month(),
         date: this.state.date.date(),
         hour: this.state.date.hour(),
-        minute: this.buildCalendarValues().indexOf(value) * MINUTES_STEP,
+        minute: Number((value as string).split(':')[1]),
       },
     };
     this.props.onChange(e, data);

@@ -296,7 +296,9 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         <MonthPicker
           {...pickerProps}
           hasHeader
-          disable={getDisabledMonths(disableParsed)}
+          disable={[]}
+          // disable={getDisabledMonths(disableParsed)}
+          onDateChange={this.props.onDateChange}
         />
       );
     }
@@ -328,6 +330,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         hasHeader
         {...pickerProps}
         disable={disableParsed}
+        hour={this.state.hour}
+        onChange={(e, d) => console.log('MinutePicker', d)}
       />
     );
   }
@@ -354,6 +358,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
                           { value }: BasePickerOnChangeData): void => {
+
     tick(this.handleSelectUndelayed, e, { value });
   }
 

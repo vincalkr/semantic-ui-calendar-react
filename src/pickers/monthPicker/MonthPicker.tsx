@@ -27,12 +27,18 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
+import { DateInputProps } from 'src/inputs';
+import moment from 'moment';
 
 type MonthPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
   & MinMaxValueProps
-  & OptionalHeaderProps;
+  & OptionalHeaderProps
+  & { 
+    dateFormat?: string;
+    onDateChange?: (data: DateInputProps) => void;
+   };
 
 export interface MonthPickerOnChangeData extends BasePickerOnChangeData {
   value: {
@@ -49,9 +55,28 @@ class MonthPicker
       use it like this <MonthPicker key={someInputValue} />
       to make react create new instance when input value changes
   */
+
+  currentDate: moment.Moment = null;
+
   constructor(props) {
     super(props);
     this.PAGE_WIDTH = MONTH_PAGE_WIDTH;
+
+    this.currentDate = null;
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.onDateChange) {
+      if(this.currentDate !== this.state.date) {
+          this.currentDate = this.state.date;
+
+          // this.props.onDateChange(this.state.date.toDate());
+          this.props.onDateChange({
+            ...this.props,
+            value: this.state.date.format(`${this.props.dateFormat} HH:mm`)
+          });
+      }
+    }
   }
 
   public render() {
@@ -69,6 +94,7 @@ class MonthPicker
       minDate,
       maxDate,
       localization,
+      onDateChange,
       ...rest
     } = this.props;
 
@@ -78,14 +104,15 @@ class MonthPicker
         values={this.buildCalendarValues()}
         onValueClick={this.handleChange}
         onCellHover={this.onHoveredCellPositionChange}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        hasPrevPage={this.isPrevPageAvailable()}
-        hasNextPage={this.isNextPageAvailable()}
+        // onNextPageBtnClick={this.switchToNextPage}
+        // onPrevPageBtnClick={this.switchToPrevPage}
+        // hasPrevPage={this.isPrevPageAvailable()}
+        // hasNextPage={this.isNextPageAvailable()}
         onBlur={this.handleBlur}
         inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
-        disabledItemIndexes={this.getDisabledPositions()}
+        disabledItemIndexes={[]}
+        // disabledItemIndexes={this.getDisabledPositions()}
         activeItemIndex={this.getActiveCellPosition()}
         hoveredItemIndex={this.state.hoveredCellPosition}
         currentHeadingValue={this.getCurrentDate()}

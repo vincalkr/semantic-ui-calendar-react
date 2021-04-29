@@ -26,6 +26,7 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
+import moment from 'moment';
 
 const HOURS_ON_PAGE = 24;
 const PAGE_WIDTH = 4;
@@ -34,7 +35,9 @@ type HourPickerProps = BasePickerProps
   & MinMaxValueProps
   & DisableValuesProps
   & TimePickerProps
-  & OptionalHeaderProps;
+  & OptionalHeaderProps
+  & { enable?: moment.Moment[] };
+
 
 export interface HourPickerOnChangeData extends BasePickerOnChangeData {
   value: {
@@ -102,14 +105,20 @@ class HourPicker
   }
 
   protected buildCalendarValues(): string[] {
-    /*
-      Return array of hours (strings) like ['16:00', '17:00', ...]
-      that used to populate calendar's page.
-    */
-    return range(0, 24).map((h) => {
-      return `${h < 10 ? '0' : ''}${h}`;
-    }).map((hour) => buildTimeStringWithSuffix(hour, '00', this.props.timeFormat));
+    const houresInDay = this.props.enable.filter(date => date.isSame(this.state.date, 'day'));
+
+    return Array.from(new Set(houresInDay.map(h => h.format('HH:00'))));
   }
+
+  // protected buildCalendarValues(): string[] {
+  //   /*
+  //     Return array of hours (strings) like ['16:00', '17:00', ...]
+  //     that used to populate calendar's page.
+  //   */
+  //   return range(0, 24).map((h) => {
+  //     return `${h < 10 ? '0' : ''}${h}`;
+  //   }).map((hour) => buildTimeStringWithSuffix(hour, '00', this.props.timeFormat));
+  // }
 
   protected getSelectableCellPositions(): number[] {
     return filter(
@@ -195,7 +204,7 @@ class HourPicker
         year: this.state.date.year(),
         month: this.state.date.month(),
         date: this.state.date.date(),
-        hour: this.buildCalendarValues().indexOf(value),
+        hour: Number((value as string).split(':')[0]),
       },
     };
     this.props.onChange(e, data);

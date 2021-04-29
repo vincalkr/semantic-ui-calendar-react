@@ -102,8 +102,10 @@ class DayPicker
       <DayView
         { ...rest }
         values={this.buildCalendarValues()}
-        hasNextPage={this.isNextPageAvailable()}
-        hasPrevPage={this.isPrevPageAvailable()}
+        // hasNextPage={this.isNextPageAvailable()}
+        hasNextPage={true}
+        hasPrevPage={true}
+        // hasPrevPage={this.isPrevPageAvailable()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onValueClick={this.handleChange}
