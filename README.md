@@ -6,6 +6,7 @@ NEW FEATURE :tada:
 #In DatTimeInput Component (using in inline)
 
 +added new callback prop called onDateChange triggered on month - year changing when press side arrows
+
 +hourPicker and minutePicker show only houres and minutes inside enable dates array
 
 # semantic-ui-calendar-react-plus
