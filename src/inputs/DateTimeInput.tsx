@@ -331,7 +331,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         {...pickerProps}
         disable={disableParsed}
         hour={this.state.hour}
-        onChange={(e, d) => console.log('MinutePicker', d)}
       />
     );
   }
