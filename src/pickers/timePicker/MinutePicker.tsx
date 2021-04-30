@@ -186,6 +186,17 @@ class MinutePicker
     }
   }
 
+  // protected getActiveCellPosition(): number {
+  //   /*
+  //     Return position of a minute that should be displayed as active
+  //     (position in array returned by `this.buildCalendarValues`).
+  //   */
+  //   const { value } = this.props;
+  //   if (value && value.isSame(this.state.date, 'date')) {
+  //     return Math.floor(this.props.value.minutes() / MINUTES_STEP);
+  //   }
+  // }
+
   protected getActiveCellPosition(): number {
     /*
       Return position of a minute that should be displayed as active
@@ -193,7 +204,7 @@ class MinutePicker
     */
     const { value } = this.props;
     if (value && value.isSame(this.state.date, 'date')) {
-      return Math.floor(this.props.value.minutes() / MINUTES_STEP);
+      return this.buildCalendarValues().findIndex((item, i) => this.props.value.minute() === Number(item.split(':')[1]));
     }
   }
 
