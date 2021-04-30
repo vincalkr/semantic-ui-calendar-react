@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.0.8 2019-05-30
+## v1.0.8 2021-04-30
 
 Cell selection in MinutePicker when set value prop fixed
 ## v1.0.7 2021-04-29
