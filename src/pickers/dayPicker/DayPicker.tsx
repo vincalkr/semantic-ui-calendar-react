@@ -26,7 +26,7 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { DateInputProps } from 'src/inputs';
 
 const PAGE_WIDTH = 7;
@@ -48,6 +48,8 @@ type DayPickerProps = BasePickerProps
   & { 
     dateFormat?: string;
     onDateChange?: (data: DateInputProps) => void;
+    onHasNextPage?: (currentDate: Moment) => boolean;
+    onHasPrevPage?: (currentDate: Moment) => boolean;
    }
 
 class DayPicker
@@ -95,6 +97,8 @@ class DayPicker
       markColor,
       localization,
       onDateChange,
+      onHasNextPage = () => true,
+      onHasPrevPage = () => true,
       ...rest
     } = this.props;
 
@@ -103,8 +107,8 @@ class DayPicker
         { ...rest }
         values={this.buildCalendarValues()}
         // hasNextPage={this.isNextPageAvailable()}
-        hasNextPage={true}
-        hasPrevPage={true}
+        hasNextPage={onHasNextPage(this.state.date)}
+        hasPrevPage={onHasPrevPage(this.state.date)}
         // hasPrevPage={this.isPrevPageAvailable()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
