@@ -133,6 +133,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     ...MinMaxValuePropTypes,
     ...{
       startMode: PropTypes.oneOf([ 'year', 'month', 'day' ]),
+      lockViewMode: PropTypes.bool,
       /** Date and time divider. */
       divider: PropTypes.string,
       /** Datetime formatting string. */
@@ -257,6 +258,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       localization,
       tabIndex,
       enable,
+      lockViewMode = false,
       pickerStyle,
       pickerWidth,
     } = this.props;
@@ -272,7 +274,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
       onChange: this.handleSelect,
-      onHeaderClick: this.switchToPrevMode,
+      onHeaderClick: !lockViewMode && this.switchToPrevMode,
       initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateTimeFormat),
       value: buildValue(value, null, localization, dateTimeFormat, null),
       enable: parseArrayOrValue(enable, dateFormat, localization),
