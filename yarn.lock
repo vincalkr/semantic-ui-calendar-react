@@ -7,7 +7,6 @@
   "resolved" "https://registry.npmjs.org/@babel/cli/-/cli-7.4.4.tgz"
   "version" "7.4.4"
   dependencies:
-    "chokidar" "^2.0.4"
     "commander" "^2.8.1"
     "convert-source-map" "^1.1.0"
     "fs-readdir-recursive" "^1.1.0"
@@ -1724,7 +1723,6 @@
     "anymatch" "^2.0.0"
     "async-each" "^1.0.1"
     "braces" "^2.3.2"
-    "fsevents" "^1.2.7"
     "glob-parent" "^3.1.0"
     "inherits" "^2.0.3"
     "is-binary-path" "^1.0.0"
@@ -2564,7 +2562,6 @@
     "estraverse" "^4.2.0"
     "esutils" "^2.0.2"
     "optionator" "^0.8.1"
-    "source-map" "~0.6.1"
   optionalDependencies:
     "source-map" "~0.6.1"
 

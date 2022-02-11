@@ -9,7 +9,7 @@
     "start": "yarn webpack-dev-server",
     "clean": "del build",
     "prepare": "npm run build",
-    "compile": "npm run lint && npm run clean && npm run build",
+    "compile": "npm run lint && npm run clean && npm run tsc",
     "prebuild": "yarn test && yarn lint && yarn rimraf dist/*",
     "build": "yarn build:commonjs && yarn build:es6 && yarn build:amd && yarn build:umd && yarn build:declarations",
     "build:commonjs": "yarn tsc --module commonjs --outDir ./dist/commonjs",
